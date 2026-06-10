@@ -1,14 +1,6 @@
 
 
-(defun transicion-valida (color-actual cambiar-a)
 
-    (cond
-        ((and (eq color-actual 'rojo)(eq cambiar-a 'verde)) t)
-        ((and (eq color-actual 'verde)(eq cambiar-a 'amarillo)) t)
-        ((and (eq color-actual 'amarillo)(eq cambiar-a 'rojo)) t)
-        (t nil)
-    )
-)
 
 (defun transicion (color-actual cambiar-a)
 	(cond
