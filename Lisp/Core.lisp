@@ -1,11 +1,4 @@
-(defun transicion(color-actual, cambiar-a)
-    (cond
-        ((eq color-actual 'rojo) (eq cambiar-a 'verde) 'verde)
-        ((eq color-actual 'verde) (eq cambiar-a 'amarillo) 'amarillo)
-        ((eq color-actual 'amarillo) (eq cambiar-a 'rojo) 'rojo)
-        (t (list color-actual 'accion-por-defecto))
-    )
-)
+
 
 (defun transicion-valida (color-actual cambiar-a)
 
