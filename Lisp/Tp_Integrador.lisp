@@ -22,14 +22,11 @@
 		((and (eq color-actual 'en-rojo) (eq cambiar-a 'verde))
 		(list 'en-verde "cambiar-a-verde"))
 
-		((and (eq color-actual 'en-amarillo) (eq cambiar-a 'rojo))
-     	(list 'en-rojo "cambiar-a-rojo"))
+		((and (eq color-actual 'en-amarillo) (eq cambiar-a 'rojo))(list 'en-rojo "cambiar-a-rojo"))
 
-		((and (eq color-actual 'en-verde) (eq cambiar-a 'amarillo))
-    	 (list 'en-amarillo "cambiar-a-amarillo"))
-			
+		((and (eq color-actual 'en-verde) (eq cambiar-a 'amarillo))(list 'en-amarillo "cambiar-a-amarillo"))
 		(t (list color-actual 'accion-por-defecto))
-     )
+    )
 )
 
 (defun timer-rojo(tiempo-unix)
