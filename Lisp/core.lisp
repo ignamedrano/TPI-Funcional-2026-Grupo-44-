@@ -1,26 +1,22 @@
-
-
-(defun transicion-valida (color-actual cambiar-a)
-
-    (cond
-        ((and (eq color-actual 'rojo)(eq cambiar-a 'verde)) t)
-        ((and (eq color-actual 'verde)(eq cambiar-a 'amarillo)) t)
-        ((and (eq color-actual 'amarillo)(eq cambiar-a 'rojo)) t)
-        (t nil)
-    )
-)
+;; =========================================================
+;; FUNCION: transicion
+;; NATURALEZA: Pura (Mapea entradas a salidas estables sin alterar variables globales ni entorno)
+;; ESTRATEGIA: Funcion predicado / condicional (Evalua combinaciones de simbolos mediante cond)
+;; IMPACTO: No destructiva (Crea listas nuevas mediante list sin modificar estructuras previas)
+;; =========================================================
 
 (defun transicion (color-actual cambiar-a)
 	(cond
 		((and (eq color-actual 'en-rojo) (eq cambiar-a 'verde))
 		(list 'en-verde "cambiar-a-verde"))
 
-		((and (eq color-actual 'en-amarillo) (eq cambiar-a 'rojo))(list 'en-rojo "cambiar-a-rojo"))
+		((and (eq color-actual 'en-amarillo) (eq cambiar-a 'rojo))
+        (list 'en-rojo "cambiar-a-rojo"))
 
-		((and (eq color-actual 'en-verde) (eq cambiar-a 'amarillo))(list 'en-amarillo "cambiar-a-amarillo"))
-		(t (list color-actual 'accion-por-defecto))
-    )
-)
+		((and (eq color-actual 'en-verde) (eq cambiar-a 'amarillo))
+        (list 'en-amarillo "cambiar-a-amarillo"))
+
+		(t (list color-actual 'accion-por-defecto))))
 
 (defun timer-rojo(tiempo-unix)
     let ((actual-tiempo (tiempo-unix)))
