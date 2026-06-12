@@ -1,51 +1,19 @@
-
-
-(defun transicion-valida (color-actual cambiar-a)
-
-    (cond
-        ((and (eq color-actual 'rojo)(eq cambiar-a 'verde)) t)
-        ((and (eq color-actual 'verde)(eq cambiar-a 'amarillo)) t)
-        ((and (eq color-actual 'amarillo)(eq cambiar-a 'rojo)) t)
-        (t nil)
-    )
-)
-
-(defun transicion (color-actual cambiar-a)
-	(cond
-		((and (eq color-actual 'en-rojo) (eq cambiar-a 'verde))
-		(list 'en-verde "cambiar-a-verde"))
-
-		((and (eq color-actual 'en-amarillo) (eq cambiar-a 'rojo))(list 'en-rojo "cambiar-a-rojo"))
-
-		((and (eq color-actual 'en-verde) (eq cambiar-a 'amarillo))(list 'en-amarillo "cambiar-a-amarillo"))
-		(t (list color-actual 'accion-por-defecto))
-    )
-)
-
-(defun timer-rojo(tiempo-unix)
-    let ((actual-tiempo (tiempo-unix)))
-    (cond
-        ((<= (- actual-tiempo tiempo-unix) 90) 'rojo)
-        (t  timer-amarillo(tiempo-unix))
-    )
-)
-
-(defun timer-amarillo(tiempo-unix)
-    let ((actual-tiempo (tiempo-unix)))
-    (cond
-        ((<= (- actual-tiempo tiempo-unix) 6) 'amarillo)
-        (t timer-verde(tiempo-unix))
-    )
-)
-
-(defun  timer-verde(tiempo-unix)
-    let ((actual-tiempo (tiempo-unix)))
-    (cond
-        ((<= (- actual-tiempo tiempo-unix) 120) 'verde)
-        (t timer-rojo(tiempo-unix))
-    )
-)
-
 (defun timer (tiempo-unix)
-    timer-rojo(tiempo-unix)
-)
+  (let ((tiempo-ciclo (mod tiempo-unix 225)))
+    (cond
+      ((< tiempo-ciclo 90) 'rojo)
+      ((< tiempo-ciclo 93) 'rojo-intermitente)
+      ((< tiempo-ciclo 213) 'verde)
+      ((< tiempo-ciclo 216) 'verde-intermitente)
+      ((< tiempo-ciclo 222) 'amarillo)
+      (t 'amarillo-intermitente))))
+
+(defun log-transicion (tiempo-actual tiempo-fin color-anterior)
+  (let ((color-nuevo (timer tiempo-actual)))
+  (cond
+    ((> tiempo-actual tiempo-fin) 'no-hay-cambios)
+           ((not (eq color-anterior color-nuevo))
+            (format t "Tiempo ~A: la luz ha cambiado de ~A a ~A~%"
+                    tiempo-actual color-anterior color-nuevo)
+            (log-transicion (+ tiempo-actual 1) tiempo-fin color-nuevo))
+           (t (log-transicion (+ tiempo-actual 1) tiempo-fin color-anterior)))))
