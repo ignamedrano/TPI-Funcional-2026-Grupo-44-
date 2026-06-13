@@ -1,9 +1,9 @@
-;; =========================================================
-;; FUNCION: transicion
-;; NATURALEZA: Pura (Mapea entradas a salidas estables sin alterar variables globales ni entorno)
-;; ESTRATEGIA: Funcion predicado / condicional (Evalua combinaciones de simbolos mediante cond)
-;; IMPACTO: No destructiva (Crea listas nuevas mediante list sin modificar estructuras previas)
-;; =========================================================
+;;; =========================================================
+;;; FUNCION: transicion
+;;; NATURALEZA: Pura (Mapea entradas a salidas estables sin alterar variables globales ni entorno)
+;;; ESTRATEGIA: Funcion predicado / condicional (Evalua combinaciones de simbolos mediante cond)
+;;; IMPACTO: No destructiva (Crea listas nuevas mediante list sin modificar estructuras previas)
+;;; =========================================================
 
 (defun transicion (color-actual cambiar-a)
 	(cond
@@ -17,3 +17,39 @@
         (list 'en-amarillo "cambiar-a-rojo"))
 
 		(t (list color-actual 'accion-por-defecto))))
+
+
+;;; ========================================================
+;;; FUNCIÓN: simular-distribucion
+;;; NATURALEZA: Pura (Calcula estadísticas porcentuales operando únicamente sobre sus argumentos locales)
+;;; ESTRATEGIA: Recursividad de Cola (La llamada a sí misma es la última acción atómica en cada rama)
+;;; IMPACTO: No destructiva (Genera dinámicamente una lista nueva al llegar al caso base final)
+;;; ========================================================
+
+(defun simular-distribucion (tiempo-restante color-actual tiempo-en-color acum-rojo acum-amarillo acum-verde)
+  (cond
+    ;; Si ya pasaron los 3600 segundos, se frena el bucle y devuelve los porcentajes finales.
+    ((<= tiempo-restante 0)
+     (list 'rojo (* (/ acum-rojo 3600.0) 100)
+           'amarillo (* (/ acum-amarillo 3600.0) 100)
+           'verde (* (/ acum-verde 3600.0) 100)))
+    ;; Si un color cumplió su ciclo, llamamos a la recursión cambiando el color y reseteando su timer.
+    ((and (eq color-actual 'en-rojo) (>= tiempo-en-color 90))
+     (simular-distribucion tiempo-restante 'en-verde 0 acum-rojo acum-amarillo acum-verde))
+
+    ((and (eq color-actual 'en-verde) (>= tiempo-en-color 120))
+     (simular-distribucion tiempo-restante 'en-amarillo 0 acum-rojo acum-amarillo acum-verde))
+
+    ((and (eq color-actual 'en-amarillo) (>= tiempo-en-color 6))
+     (simular-distribucion tiempo-restante 'en-rojo 0 acum-rojo acum-amarillo acum-verde))
+
+    ;; Restamos 1 al tiempo restante, sumamos 1 al timer del color y 1 al acumulador correspondiente.
+    ((eq color-actual 'en-rojo)
+     (simular-distribucion (- tiempo-restante 1) color-actual (+ tiempo-en-color 1) (+ acum-rojo 1) acum-amarillo acum-verde))
+
+    ((eq color-actual 'en-verde)
+     (simular-distribucion (- tiempo-restante 1) color-actual (+ tiempo-en-color 1) acum-rojo acum-amarillo (+ acum-verde 1)))
+
+    ((eq color-actual 'en-amarillo)
+     (simular-distribucion (- tiempo-restante 1) color-actual (+ tiempo-en-color 1) acum-rojo (+ acum-amarillo 1) acum-verde))
+    ))
