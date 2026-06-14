@@ -1,12 +1,4 @@
 
-
-
-
-
-
-
-
-
 ;; =========================================================
 ;; FUNCIÓN: timer
 ;; NATURALEZA: Pura (Dado un mismo número de tiempo UNIX, siempre retorna el mismo símbolo de color)
@@ -15,7 +7,7 @@
 ;; =========================================================
 
 (defun timer (tiempo-unix)
-  (let ((tiempo-ciclo (mod tiempo-unix 216)))
+  (let ((tiempo-ciclo (mod tiempo-unix 216))) ; obtenemos resto del tiempo ingresado por el total de un ciclo para saber donde estamos parados
     (cond
       ((< tiempo-ciclo 90) 'rojo)
       ((< tiempo-ciclo 210) 'verde)
@@ -50,6 +42,23 @@
                     tiempo-actual color-anterior color-nuevo)
             (log-transicion (+ tiempo-actual 1) tiempo-fin color-nuevo))
            (t (log-transicion (+ tiempo-actual 1) tiempo-fin color-anterior)))))
+
+
+;req 4 extension: a y b
+(defun duracion-ciclo (s-rojo s-rojo-int s-verde s-verde-int s-amarillo s-amarillo-int)
+  (+ s-rojo s-rojo-int s-verde s-verde-int s-amarillo s-amarillo-int))
+
+;b
+(defun recomendacion-ciclo (duracion)
+  (cond
+    ((< duracion 35)
+     "RECOMENDACION: Aumentar duracion del ciclo")
+    ((<= duracion 150)
+     "RECOMENDACION: Mantener duracion")
+    (t "RECOMENDACION: Reducir duracion del ciclo")))
+
+
+
 
 
 
