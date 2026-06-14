@@ -76,3 +76,54 @@
        (list 'en-amarillo "cambiar-a-amarillo-intermitente"))
       
     (t (list color-actual 'accion-por-defecto)))
+
+;;Extension 1, Requerimiento 1
+(defun simular-distribucion (tiempo-restante color-actual tiempo-en-color 
+                             acum-rojo acum-rojo-int acum-verde acum-verde-int acum-amarillo acum-amarillo-int)
+  (cond
+    ;; Caso base: devuelve la lista con los 6 porcentajes calculados sobre los 3600 segundos
+    ((<= tiempo-restante 0)
+     (list 'rojo (* (/ acum-rojo 3600.0) 100)
+           'rojo-intermitente (* (/ acum-rojo-int 3600.0) 100)
+           'verde (* (/ acum-verde 3600.0) 100)
+           'verde-intermitente (* (/ acum-verde-int 3600.0) 100)
+           'amarillo (* (/ acum-amarillo 3600.0) 100)
+           'amarillo-intermitente (* (/ acum-amarillo-int 3600.0) 100)))
+
+    ;; Control de saltos de estado según la nueva lógica de tiempos (90, 3, 120, 3, 6, 3)
+    ((and (eq color-actual 'en-rojo) (>= tiempo-en-color 90))
+     (simular-distribucion tiempo-restante 'en-rojo-intermitente 0 acum-rojo acum-rojo-int acum-verde acum-verde-int acum-amarillo acum-amarillo-int))
+
+    ((and (eq color-actual 'en-rojo-intermitente) (>= tiempo-en-color 3))
+     (simular-distribucion tiempo-restante 'en-verde 0 acum-rojo acum-rojo-int acum-verde acum-verde-int acum-amarillo acum-amarillo-int))
+
+    ((and (eq color-actual 'en-verde) (>= tiempo-en-color 120))
+     (simular-distribucion tiempo-restante 'en-verde-intermitente 0 acum-rojo acum-rojo-int acum-verde acum-verde-int acum-amarillo acum-amarillo-int))
+
+    ((and (eq color-actual 'en-verde-intermitente) (>= tiempo-en-color 3))
+     (simular-distribucion tiempo-restante 'en-amarillo 0 acum-rojo acum-rojo-int acum-verde acum-verde-int acum-amarillo acum-amarillo-int))
+
+    ((and (eq color-actual 'en-amarillo) (>= tiempo-en-color 6))
+     (simular-distribucion tiempo-restante 'en-amarillo-intermitente 0 acum-rojo acum-rojo-int acum-verde acum-verde-int acum-amarillo acum-amarillo-int))
+
+    ((and (eq color-actual 'en-amarillo-intermitente) (>= tiempo-en-color 3))
+     (simular-distribucion tiempo-restante 'en-rojo 0 acum-rojo acum-rojo-int acum-verde acum-verde-int acum-amarillo acum-amarillo-int))
+
+    ;; Incremento paso a paso del tiempo y de los acumuladores correspondientes
+    ((eq color-actual 'en-rojo)
+     (simular-distribucion (- tiempo-restante 1) color-actual (+ tiempo-en-color 1) (+ acum-rojo 1) acum-rojo-int acum-verde acum-verde-int acum-amarillo acum-amarillo-int))
+    
+    ((eq color-actual 'en-rojo-intermitente)
+     (simular-distribucion (- tiempo-restante 1) color-actual (+ tiempo-en-color 1) acum-rojo (+ acum-rojo-int 1) acum-verde acum-verde-int acum-amarillo acum-amarillo-int))
+
+    ((eq color-actual 'en-verde)
+     (simular-distribucion (- tiempo-restante 1) color-actual (+ tiempo-en-color 1) acum-rojo acum-rojo-int (+ acum-verde 1) acum-verde-int acum-amarillo acum-amarillo-int))
+    
+    ((eq color-actual 'en-verde-intermitente)
+     (simular-distribucion (- tiempo-restante 1) color-actual (+ tiempo-en-color 1) acum-rojo acum-rojo-int acum-verde (+ acum-verde-int 1) acum-amarillo acum-amarillo-int))
+
+    ((eq color-actual 'en-amarillo)
+     (simular-distribucion (- tiempo-restante 1) color-actual (+ tiempo-en-color 1) acum-rojo acum-rojo-int acum-verde acum-verde-int (+ acum-amarillo 1) acum-amarillo-int))
+    
+    ((eq color-actual 'en-amarillo-intermitente)
+     (simular-distribucion (- tiempo-restante 1) color-actual (+ tiempo-en-color 1) acum-rojo acum-rojo-int acum-verde acum-verde-int acum-amarillo (+ acum-amarillo-int 1)))))
