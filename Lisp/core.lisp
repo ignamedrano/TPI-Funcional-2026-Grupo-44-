@@ -77,7 +77,12 @@
       
     (t (list color-actual 'accion-por-defecto)))
 
-;;Extension 1, Requerimiento 1
+;;Extension 1, Requerimiento 5
+
+(defun ciclos-por-tiempo (minutos)
+  (floor (/ (* minutos 60) 225)))
+
+;;Extension 1, Requerimiento 6
 (defun simular-distribucion (tiempo-restante color-actual tiempo-en-color 
                              acum-rojo acum-rojo-int acum-verde acum-verde-int acum-amarillo acum-amarillo-int)
   (cond
