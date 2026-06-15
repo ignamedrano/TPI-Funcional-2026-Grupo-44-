@@ -25,3 +25,8 @@
 
             (t
              "RECOMENDACION: Reducir duracion del ciclo"))))
+;; Caso OK
+(print(recomendacion-ciclo (duracion-ciclo 15 5 10)))
+;; Caso Alternativo (Tiempos en cero: da la recomendación mínima de aumentar duración)
+(print(recomendacion-ciclo (duracion-ciclo 0 0 0)))
+;(print(recomendacion-ciclo (duracion-ciclo 15 "cinco" 10))) ; Error matemático por texto en segundos
