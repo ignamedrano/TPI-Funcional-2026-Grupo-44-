@@ -12,10 +12,10 @@
 
 | Nombre y Apellido | Legajo / Matrícula | Correo Electrónico | Usuario GitHub |
 | :--- | :--- | :--- | :--- |
-| [Nombre Integrante 1] | `[Legajo 1]` | [Email 1] | [@usuario1] |
-| [Nombre Integrante 2] | `[Legajo 2]` | [Email 2] | [@usuario2] |
-| [Nombre Integrante 3] | `[Legajo 3]` | [Email 3] | [@usuario3] |
-| [Nombre Integrante 4] | `[Legajo 3]` | [Email 3] | [@usuario3] |
+| [Nombre Integrante 1] | [Email 1] | [@usuario1] |
+| [Nombre Integrante 2] | [Email 2] | [@usuario2] |
+| [Nombre Integrante 3] | [Email 3] | [@usuario3] |
+| [Nombre Integrante 4] | [Email 3] | [@usuario3] |
 | [Villagra Facundo Nahuel] | [vifana454@gmail.com] | vnahuel454 |
 
 
