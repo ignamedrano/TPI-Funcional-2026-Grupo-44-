@@ -44,7 +44,7 @@ TPI-Funcional-2026-Grupo[44]/
 ---
 
 # Defensa en Video (Enlaces)
-Acceda a las presentaciones y defensas del trabajo práctico a través de los siguientes enlaces:
+Enlace a la presentación del trabajo práctico:
 
 **Video en Youtube - Trabajo integrador - paradigmas y lenguajes - grupo 44 :** https://youtu.be/OCd_UzWt1W0
 
