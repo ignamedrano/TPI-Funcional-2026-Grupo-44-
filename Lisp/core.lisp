@@ -18,6 +18,17 @@
 
 		(t (list color-actual 'accion-por-defecto))))
 
+;; Casos OK
+(print (transicion 'en-rojo 'verde))
+(print (transicion 'en-verde 'amarillo))
+(print (transicion 'en-amarillo 'rojo))
+;; Caso Alternativo (El semáforo ignora la orden porque no es la secuencia correcta)
+(print (transicion 'en-rojo 'amarillo))
+;; Caso de Error
+(print (transicion "en-rojo" 'verde)) ; Error de tipo: usa texto en vez de símbolos
+
+(terpri)
+(terpri)
 
 ;;; ========================================================
 ;;; FUNCIÓN: simular-distribucion
@@ -51,8 +62,16 @@
      (simular-distribucion (- tiempo-restante 1) color-actual (+ tiempo-en-color 1) acum-rojo acum-amarillo (+ acum-verde 1)))
 
     ((eq color-actual 'en-amarillo)
-     (simular-distribucion (- tiempo-restante 1) color-actual (+ tiempo-en-color 1) acum-rojo (+ acum-amarillo 1) acum-verde))))
+     (simular-distribucion (- tiempo-restante 1) color-actual (+ tiempo-en-color 1) acum-rojo (+ acum-amarillo 1) acum-verde))
+     (t (list color-actual 'No-corresponde))))
 
+
+;(compile 'simular-distribucion) ; para entornos antiguos, descomentamos y forzamos la compilacion
+(print(simular-distribucion 3600 'en-rojo 0 0 0 0 )) ; ok
+(print(simular-distribucion 3600 'en-verde 40 100 20 200)); alternativo empezando en verde y con acumuladores avanzados
+
+(terpri)
+(terpri)
 
 ;;Extension 1, Requerimiento 1
 (defun transicion1 (color-actual cambiar-a)
@@ -77,16 +96,27 @@
       
     (t (list color-actual 'accion-por-defecto)))
 
+;;Caso ok
+(print (transicion 'en-amarillo-intermitente 'rojo))
+(print (transicion 'en-rojo 'rojo-intermitente))
+(print (transicion 'en-rojo-intermitente 'verde))
+
 ;;Extension 1, Requerimiento 5
 
 (defun ciclos-por-tiempo (minutos)
   (floor (/ (* minutos 60) 225)))
 
+;;Caso ok
+(print (ciclos-por-tiempo 60))
+
+(terpri)
+(terpri)
+
 ;;Extension 1, Requerimiento 6
 (defun simular-distribucion (tiempo-restante color-actual tiempo-en-color 
                              acum-rojo acum-rojo-int acum-verde acum-verde-int acum-amarillo acum-amarillo-int)
   (cond
-    ;; Caso base: devuelve la lista con los 6 porcentajes calculados sobre los 3600 segundos
+    ;; Devuelve la lista con los 6 porcentajes calculados sobre los 3600 segundos
     ((<= tiempo-restante 0)
      (list 'rojo (* (/ acum-rojo 3600.0) 100)
            'rojo-intermitente (* (/ acum-rojo-int 3600.0) 100)
@@ -132,3 +162,7 @@
     
     ((eq color-actual 'en-amarillo-intermitente)
      (simular-distribucion (- tiempo-restante 1) color-actual (+ tiempo-en-color 1) acum-rojo acum-rojo-int acum-verde acum-verde-int acum-amarillo (+ acum-amarillo-int 1)))))
+
+;(compile 'simular-distribucion) ; para entornos antiguos, descomentamos y forzamos la compilacion
+;; Caso OK (Simulación de una hora completa)
+(print (simular-distribucion 3600 'en-rojo 0 0 0 0 0 0 0))
