@@ -8,7 +8,7 @@
 
 ---
 
-# Integrantes - Grupo [44]
+# Integrantes - Grupo 44
 
 | Nombre y Apellido | Correo Electrónico | Usuario GitHub |
 | :--- | :--- | :--- |
@@ -16,7 +16,7 @@
 | [Nombre Integrante 2] | [Email 2] | [@usuario2] |
 | [Nombre Integrante 3] | [Email 3] | [@usuario3] |
 | [Nombre Integrante 4] | [Email 3] | [@usuario3] |
-| [Villagra Facundo Nahuel] | [vifana454@gmail.com] | vnahuel454 |
+| Villagra Facundo Nahuel | vifana454@gmail.com | vnahuel454 |
 
 
 # Estructura del Proyecto
@@ -37,16 +37,16 @@ TPI-Funcional-2026-Grupo[44]/
 ---
 
 # Tecnologías y Lenguajes Utilizados
-* **Lenguaje Principal:** [Common Lisp]
-* **Lenguaje Comparativo:** [Clojure]
-* **Entorno de Ejecución:** [SBCL / Quicklisp]
+* **Lenguaje Principal:** Common Lisp
+* **Lenguaje Comparativo:** Clojure
+* **Entorno de Ejecución:** SBCL / Quicklisp
 
 ---
 
 # Defensa en Video (Enlaces)
 Acceda a las presentaciones y defensas del trabajo práctico a través de los siguientes enlaces:
 
-**Video en Youtube - Trabajo integrador - paradigmas y lenguajes - grupo 44 :** [https://youtu.be/OCd_UzWt1W0]
+**Video en Youtube - Trabajo integrador - paradigmas y lenguajes - grupo 44 :** https://youtu.be/OCd_UzWt1W0
 
 ---
 
