@@ -13,7 +13,7 @@
 | Nombre y Apellido | Correo Electrónico | Usuario GitHub |
 | :--- | :--- | :--- |
 | Medrano Ignacio Nahuel | nachomedrano6@gmail.com | @ignamedrano |
-| [Nombre Integrante 2] | [Email 2] | [@usuario2] |
+| Rodriguez Martemucci Lucciana A. | angelinnamartemucci@gmail.com | [@angelinnamartemucci|
 | [Nombre Integrante 3] | [Email 3] | [@usuario3] |
 | [Nombre Integrante 4] | [Email 3] | [@usuario3] |
 | Villagra Facundo Nahuel | vifana454@gmail.com | vnahuel454 |
