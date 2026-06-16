@@ -12,7 +12,7 @@
 
 | Nombre y Apellido | Correo Electrónico | Usuario GitHub |
 | :--- | :--- | :--- |
-| [Nombre Integrante 1] | [Email 1] | [@usuario1] |
+| Medrano Ignacio Nahuel | nachomedrano6@gmail.com | @ignamedrano |
 | [Nombre Integrante 2] | [Email 2] | [@usuario2] |
 | [Nombre Integrante 3] | [Email 3] | [@usuario3] |
 | [Nombre Integrante 4] | [Email 3] | [@usuario3] |
