@@ -15,7 +15,7 @@
 | Medrano Ignacio Nahuel | nachomedrano6@gmail.com | @ignamedrano |
 | Rodriguez Martemucci Lucciana A. | angelinnamartemucci@gmail.com | @angelinnamartemucci|
 | Magno Exequiel Isler Mendiaz | islermagno@gmail.com | @redstrike212 |
-| [Nombre Integrante 4] | [Email 3] | [@usuario3] |
+| Martinez Juan Esteban | martinezjuanks@gmail.com | @Martinezjuanesok|
 | Villagra Facundo Nahuel | vifana454@gmail.com | vnahuel454 |
 
 
