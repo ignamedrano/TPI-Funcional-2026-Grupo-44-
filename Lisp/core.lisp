@@ -1,10 +1,10 @@
 ;req2
-(defun timer (tiempo-unix)
-  (let ((tiempo-ciclo (mod tiempo-unix 216)))
+(defun timer (tiempo-unix)  ; recibe un tipo de dato numero en formato unix
+  (let ((tiempo-ciclo (mod tiempo-unix 216))) 
     (cond
       ((< tiempo-ciclo 90) 'rojo)
       ((< tiempo-ciclo 210) 'verde)
-      (t 'amarillo))
+      (t 'amarillo)) ; devuelve un simbolo dependiendo de donde este el semaforo
   )
 )
 
