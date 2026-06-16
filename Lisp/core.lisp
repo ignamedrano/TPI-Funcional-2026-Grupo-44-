@@ -166,3 +166,4 @@
 ;(compile 'simular-distribucion) ; para entornos antiguos, descomentamos y forzamos la compilacion
 ;; Caso OK (Simulación de una hora completa)
 (print (simular-distribucion 3600 'en-rojo 0 0 0 0 0 0 0))
+
