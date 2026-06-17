@@ -30,12 +30,12 @@
 (terpri)
 (terpri)
 
-;; =========================================================
-;; FUNCIÓN: timer
-;; NATURALEZA: Pura (Dado un mismo número de tiempo UNIX, siempre retorna el mismo símbolo de color)
-;; ESTRATEGIA: Función Predicado / Condicional (Clasifica rangos numéricos usando operadores lógicos)
-;; IMPACTO: No destructiva (No altera datos en memoria, solo devuelve símbolos constantes)
-;; =========================================================
+;;; =========================================================
+;;; FUNCIÓN: timer
+;;; NATURALEZA: Pura (Dado un mismo número de tiempo UNIX, siempre retorna el mismo símbolo de color)
+;;; ESTRATEGIA: Función Predicado / Condicional (Clasifica rangos numéricos usando operadores lógicos)
+;;; IMPACTO: No destructiva (No altera datos en memoria, solo devuelve símbolos constantes)
+;;; =========================================================
 
 ;(sb-ext:unlock-package :sb-ext); desbloquear la palabra reservada timer (SBCL)
 
@@ -54,12 +54,12 @@
 (terpri)
 (terpri)
 
-;; ========================================================
-;; FUNCIÓN: log-transicion
-;; NATURALEZA: Impura (Genera un efecto secundario explícito en la pantalla mediante la función format)
-;; ESTRATEGIA: Recursiva de cola (Las llamadas recursivas dependen de la evaluación del flujo condicional)
-;; IMPACTO: No destructiva (No muta ninguna estructura de datos en memoria)
-;; ======================================================== 
+;;; ========================================================
+;;; FUNCIÓN: log-transicion
+;;; NATURALEZA: Impura (Genera un efecto secundario explícito en la pantalla mediante la función format)
+;;; ESTRATEGIA: Recursiva de cola (Las llamadas recursivas dependen de la evaluación del flujo condicional)
+;;; IMPACTO: No destructiva (No muta ninguna estructura de datos en memoria)
+;;; ======================================================== 
 
 (defun log-transicion (tiempo-actual tiempo-fin color-anterior)
   (let ((color-nuevo (timer tiempo-actual)))
@@ -82,22 +82,22 @@
 (terpri)
 (terpri)
 
-;; ========================================================
-;; FUNCIÓN: duracion-ciclo
-;; NATURALEZA: Pura (Para los mismos tiempos de rojo, verde y amarillo siempre devuelve la misma duración total)
-;; ESTRATEGIA: Directa (Suma de los tiempos de cada fase)
-;; IMPACTO: No destructiva
-;; ========================================================
+;;; ========================================================
+;;; FUNCIÓN: duracion-ciclo
+;;; NATURALEZA: Pura (Para los mismos tiempos de rojo, verde y amarillo siempre devuelve la misma duración total)
+;;; ESTRATEGIA: Directa (Suma de los tiempos de cada fase)
+;;; IMPACTO: No destructiva
+;;; ========================================================
 
 (defun duracion-ciclo (s-rojo s-verde s-amarillo)
     (+ s-rojo s-verde s-amarillo))
 
-;; ========================================================
-;; FUNCIÓN: recomendacion-ciclo
-;; NATURALEZA: Pura (Para una misma duración siempre genera la misma recomendación)
-;; ESTRATEGIA: Condicional (Implementada mediante cond)
-;; IMPACTO: No destructiva
-;; ========================================================
+;;; ========================================================
+;;; FUNCIÓN: recomendacion-ciclo
+;;; NATURALEZA: Pura (Para una misma duración siempre genera la misma recomendación)
+;;; ESTRATEGIA: Condicional (Implementada mediante cond)
+;;; IMPACTO: No destructiva
+;;; ========================================================
 
 (defun recomendacion-ciclo (duracion)
     (let ((duracion-ciclo duracion))
@@ -201,7 +201,7 @@
       ((< tiempo-ciclo 222) 'amarillo)
       (t 'amarillo-intermitente))))
 
-;Extension 1, Requerimiento 3
+;;Extension 1, Requerimiento 3
 (defun log-transicion (tiempo-actual tiempo-fin color-anterior)
   (let ((color-nuevo (timer tiempo-actual)))
   (cond
@@ -218,11 +218,11 @@
 (terpri)
 (terpri)
 
-;Extension 1, Requerimiento 4-A
+;;Extension 1, Requerimiento 4-A
 (defun duracion-ciclo (s-rojo s-rojo-int s-verde s-verde-int s-amarillo s-amarillo-int)
   (+ s-rojo s-rojo-int s-verde s-verde-int s-amarillo s-amarillo-int))
 
-;Extension 1, Requerimiento 4-B
+;;Extension 1, Requerimiento 4-B
 (defun recomendacion-ciclo (duracion)
   (cond
     ((< duracion 35)
@@ -302,3 +302,48 @@
 ;(compile 'simular-distribucion) ; para entornos antiguos, descomentamos y forzamos la compilacion
 ;; Caso OK (Simulación de una hora completa)
 (print (simular-distribucion 3600 'en-rojo 0 0 0 0 0 0 0))
+
+;; Extension 2: Persistencia de datos
+
+(defun timer2 (tiempo-unix)
+  (let ((tiempo-ciclo (mod tiempo-unix 225)))
+    (cond
+      ((< tiempo-ciclo 90) 'rojo)
+      ((< tiempo-ciclo 93) 'rojo-intermitente)
+      ((< tiempo-ciclo 213) 'verde)
+      ((< tiempo-ciclo 216) 'verde-intermitente)
+      ((< tiempo-ciclo 222) 'amarillo)
+      (t 'amarillo-intermitente))))
+
+(defun log-transicion2 (tiempo-actual tiempo-fin color-anterior stream)
+  (let ((color-nuevo (timer2 tiempo-actual)))
+  (cond
+    ((> tiempo-actual tiempo-fin) 'no-hay-cambios)
+           ((not (eq color-anterior color-nuevo))
+           (format stream "~A - Transicion: ~A -> ~A~%"
+                    tiempo-actual color-anterior color-nuevo
+)            (log-transicion2 (+ tiempo-actual 1) tiempo-fin color-nuevo stream))
+           (t (log-transicion2 (+ tiempo-actual 1) tiempo-fin color-anterior stream)))))
+
+;;; ========================================================
+;;; FUNCIÓN: informe
+;;; NATURALEZA: Impura (Efecto secundario persistente de apertura, escritura y guardado de archivos en disco)
+;;; ESTRATEGIA: Operación Directa / Macro Estructurada (Utiliza la macro with-open-file para gestionar el flujo)
+;;; IMPACTO: No destructiva (Trabaja sobre el almacenamiento físico sin destruir estructuras de la RAM)
+;;; ========================================================
+
+(defun informe (tiempo-inicio tiempo-fin)
+  (with-open-file (stream "informe-ejecucion-semaforo.txt" :direction :output
+                        :if-exists :supersede
+                        :if-does-not-exist :create)
+     (format stream "Informe de Ejecución del Sistema Semafórico~%")
+     (format stream "=========================================~%")
+
+     (log-transicion2 tiempo-inicio tiempo-fin (timer2 tiempo-inicio) stream)
+
+     (format stream "~% --- Fin del Informe ---")))
+
+;;Caso ok
+(print (informe 0 500))
+;;(print (informe 400 100)); alternativo: (Rango invertido, crea la cabecera y el cierre del archivo plano pero finaliza vacío de datos)
+;;(print (informe "inicio" 500)); error: rompe al no poder abrir un stream sobre un tipo de dato inválido).
