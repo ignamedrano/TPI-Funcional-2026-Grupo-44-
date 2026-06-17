@@ -1,4 +1,12 @@
-;req2
+;; =========================================================
+;; FUNCIÓN: timer
+;; NATURALEZA: Pura (Dado un mismo número de tiempo UNIX, siempre retorna el mismo símbolo de color)
+;; ESTRATEGIA: Función Predicado / Condicional (Clasifica rangos numéricos usando operadores lógicos)
+;; IMPACTO: No destructiva (No altera datos en memoria, solo devuelve símbolos constantes)
+;; =========================================================
+
+;(sb-ext:unlock-package :sb-ext); desbloquear la palabra reservada timer (SBCL)
+
 (defun timer (tiempo-unix)  ; recibe un tipo de dato numero en formato unix
   (let ((tiempo-ciclo (mod tiempo-unix 216))) 
     (cond
@@ -8,7 +16,13 @@
   )
 )
 
-;req2 extension
+;;Caso ok
+(print (timer 120))
+
+(terpri)
+(terpri)
+
+;;Extension 1, Requerimiento 2
 (defun timer (tiempo-unix)
   (let ((tiempo-ciclo (mod tiempo-unix 225)))
     (cond
@@ -18,7 +32,8 @@
       ((< tiempo-ciclo 216) 'verde-intermitente)
       ((< tiempo-ciclo 222) 'amarillo)
       (t 'amarillo-intermitente))))
-;req3 extension
+
+;Extension 1, Requerimiento 3
 (defun log-transicion (tiempo-actual tiempo-fin color-anterior)
   (let ((color-nuevo (timer tiempo-actual)))
   (cond
@@ -29,15 +44,17 @@
             (log-transicion (+ tiempo-actual 1) tiempo-fin color-nuevo))
            (t (log-transicion (+ tiempo-actual 1) tiempo-fin color-anterior)))))
 
-(print (log-transicion 86 94 'desconocido));ok
+;;Caso ok
+(print (log-transicion 86 94 'desconocido))
 
-;req4 extension
-;a
+(terpri)
+(terpri)
 
+;Extension 1, Requerimiento 4-A
 (defun duracion-ciclo (s-rojo s-rojo-int s-verde s-verde-int s-amarillo s-amarillo-int)
   (+ s-rojo s-rojo-int s-verde s-verde-int s-amarillo s-amarillo-int))
 
-;b
+;Extension 1, Requerimiento 4-B
 (defun recomendacion-ciclo (duracion)
   (cond
     ((< duracion 35)
