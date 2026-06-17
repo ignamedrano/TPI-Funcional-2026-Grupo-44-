@@ -1,9 +1,9 @@
-;; FUNCIÓN: transicion
-;; NATURALEZA: Pura
-;; ESTRATEGIA: Predicado (usa cond para evaluar estados)
-;; IMPACTO: No destructiva
-;; PROPÓSITO: Modelar las transiciones válidas del semáforo devolviendo el estado actual y la acción a
-;;            realizar. Si la transición no es válida retorna una acción por defecto.
+;;; ========================================================
+;;; FUNCIÓN: transicion
+;;; NATURALEZA: Pura
+;;; ESTRATEGIA: Predicado (usa cond para evaluar estados)
+;;; IMPACTO: No destructiva
+;;; ========================================================
 
 (defn transicion [color-actual cambiar-a]
   (cond
@@ -22,12 +22,12 @@
     :else
     [color-actual :accion-por-defecto]))
 
-;; FUNCIÓN: timer
-;; NATURALEZA: Pura
-;; ESTRATEGIA: Predicado (usa cond para determinar el estado)
-;; IMPACTO: No destructiva
-;; PROPÓSITO: Determinar el estado del semáforo según el tiempo Unix recibido. Incluye los estados
-;;            intermitentes agregados en la Extensión 1.
+;;; ========================================================
+;;; FUNCIÓN: timer
+;;; NATURALEZA: Pura
+;;; ESTRATEGIA: Predicado (usa cond para determinar el estado)
+;;; IMPACTO: No destructiva
+;;; ========================================================
 
 (defn timer [tiempo-unix]
   (let [tiempo-ciclo (mod tiempo-unix 225)]
