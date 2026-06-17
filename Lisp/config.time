@@ -1,1 +1,32 @@
+(load (merge-pathnames "quicklisp/setup.lisp" (user-homedir-pathname))) ;ruta directa universal a quicklisp
+
+(ql:quickload "local-time" :silent t)  ; cargamos la libreria 
+
+(sb-ext:unlock-package :sb-ext)  ; para poder usar timer como nombre ya que es una palabra reservada 
+
+(defun timer (tiempo-unix)
+  (let ((tiempo-ciclo (mod tiempo-unix 216)))
+    (cond
+      ((< tiempo-ciclo 90) 'rojo)
+      ((< tiempo-ciclo 210) 'verde)
+      (t 'amarillo))
+  )
+)
+
+(defun log-transicion (tiempo-actual tiempo-fin color-anterior)
+  (let ((color-nuevo (timer tiempo-actual)))
+  (cond
+    ((> tiempo-actual tiempo-fin) 'NIL)
+           ((not (eq color-anterior color-nuevo))
+            (format t "Tiempo ~A: la luz ha cambiado de ~A a ~A~%" 
+               (local-time:format-timestring nil (local-time:unix-to-timestamp tiempo-actual)                     
+                                                  :format '("[" :year "-" :month "-" :day " " :hour ":" :min ":" :sec "]"))    ; aplicamos la libreria para que muestre la fecha y hora en tiempo unix a formato humano
+                 color-anterior color-nuevo)
+            (log-transicion (+ tiempo-actual 1) tiempo-fin color-nuevo))
+           (t (log-transicion (+ tiempo-actual 1) tiempo-fin color-anterior)))))
+
+;; caso de prueba en tiempo unix
+(log-transicion 1778893800 1778894300 'desconocido)
+(terpri)
+;(log-transicion 0 1000 'desconocido); alternativo inicio de la epoca unix
 
